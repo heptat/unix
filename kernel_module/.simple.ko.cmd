@@ -1,1 +1,0 @@
-cmd_/usr/local/dev/c/kernel_module/simple.ko := ld -r -m elf_x86_64 -T /usr/src/linux-headers-2.6.32-38-server/scripts/module-common.lds --build-id -o /usr/local/dev/c/kernel_module/simple.ko /usr/local/dev/c/kernel_module/simple.o /usr/local/dev/c/kernel_module/simple.mod.o
