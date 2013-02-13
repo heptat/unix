@@ -3,7 +3,9 @@
 *.ko
 *.order
 *.symvers
-*.mod.c
-!*.*
+.tmp_versions
+.*.cmd
+!*.c
 !Makefile
 !*/
+*.mod.c
