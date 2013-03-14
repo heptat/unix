@@ -11,9 +11,9 @@
  * what you should do - so a singly linked list).
  */
 
-int * create_stack(void) {
+int * create_stack(size_t *size) {
   static int stack[STACK_SIZE];
-  printf("inside create_stack size = %lu\n", sizeof(stack)/sizeof(int));
+  *size = sizeof(stack);
   return stack;
 }
 

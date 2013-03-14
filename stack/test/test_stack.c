@@ -5,10 +5,9 @@
 #include <stack.h>
 
 static void test_stack_create(void) {
-  int *new_stack = create_stack();
-  int size = sizeof(new_stack)/sizeof(int);
-  printf("stack size = %d\n", size);
-  assert (10 == size && "stack size should be 10");
+  size_t stack_size;
+  int *new_stack = create_stack(&stack_size);
+  assert (10 == (int)stack_size/sizeof(new_stack[0]) && "stack size should be 10");
 }
 
 int main (void) {
