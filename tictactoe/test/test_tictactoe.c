@@ -10,6 +10,16 @@ static void test_create_board(void) {
   assert (0 == new_board[15] && "board value at 4,4 should be 0");
 }
 
+static void test_clear_board(void) {
+  int *new_board = create_board();
+  make_move(new_board, 'x', 1, 1);
+  clear_board(new_board);
+
+  for (int i = 0; i < NUM_ELEMENTS; i++) {
+    assert (0 == new_board[i] && "board value should be 0");
+  }
+}
+
 static void test_make_move(void) {
   int *new_board = create_board();
 
@@ -29,9 +39,10 @@ static void test_make_move(void) {
   assert (0 == valid && "move should be invalid");
 }
 
-static void test_check_winner(void) {
+static void test_check_winner_on_row(void) {
   int *new_board = create_board();
 
+  clear_board(new_board);
   make_move(new_board, 'x', 1, 1);
   make_move(new_board, 'x', 1, 2);
   make_move(new_board, 'x', 1, 3);
@@ -39,11 +50,44 @@ static void test_check_winner(void) {
 
   int winner = check_winner(new_board);
   assert ('x' == winner && "'x' should be the winner");
+
+  clear_board(new_board);
+  make_move(new_board, 'o', 4, 1);
+  make_move(new_board, 'o', 4, 2);
+  make_move(new_board, 'o', 4, 3);
+  make_move(new_board, 'o', 4, 4);
+
+  winner = check_winner(new_board);
+  assert ('o' == winner && "'o' should be the winner");
+}
+
+static void test_check_winner_on_col(void) {
+  int *new_board = create_board();
+
+  clear_board(new_board);
+  make_move(new_board, 'x', 1, 1);
+  make_move(new_board, 'x', 2, 1);
+  make_move(new_board, 'x', 3, 1);
+  make_move(new_board, 'x', 4, 1);
+
+  int winner = check_winner(new_board);
+  assert ('x' == winner && "'x' should be the winner");
+
+  clear_board(new_board);
+  make_move(new_board, 'o', 1, 4);
+  make_move(new_board, 'o', 2, 4);
+  make_move(new_board, 'o', 3, 4);
+  make_move(new_board, 'o', 4, 4);
+
+  winner = check_winner(new_board);
+  assert ('o' == winner && "'o' should be the winner");
 }
 
 int main (void) {
   test_create_board();
+  test_clear_board();
   test_make_move();
-  test_check_winner();
+  test_check_winner_on_row();
+  test_check_winner_on_col();
 }
 
