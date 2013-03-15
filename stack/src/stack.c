@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stack.h>
 
 /**
@@ -11,13 +12,44 @@
  * what you should do - so a singly linked list).
  */
 
-int * create_stack(size_t *size) {
-  static int stack[STACK_SIZE];
-  *size = sizeof(stack);
-  return stack;
-}
-
 BOOL is_empty(void) {
   return TRUE;
 }
 
+Stack * create_stack(int length) {
+  Stack *stack = malloc(sizeof(Stack));
+  stack->values = malloc(length * sizeof(int));
+  stack->length = length;
+  stack->head = -1;
+
+  return stack;
+}
+
+BOOL push(Stack *stack, int value) {
+  if (stack->head == (stack->length - 1)) {
+    return FALSE;
+  }
+  stack->head++;
+  stack->values[stack->head] = value;
+
+  return TRUE;
+}
+
+int pop(Stack *stack, BOOL *success) {
+  if (stack->head < 0) {
+    *success = FALSE;
+    return FALSE;
+  }
+  *success = TRUE;
+  int value = stack->values[stack->head];
+  stack->head--;
+
+  return value;
+}
+
+int peek(Stack *stack) {
+  if (stack->head < 0) {
+    return 0;
+  }
+  return stack->values[stack->head];
+}
