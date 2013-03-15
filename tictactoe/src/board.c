@@ -6,6 +6,15 @@ int * create_board(void) {
   return board;
 }
 
+int get_index_from_coords(int x, int y) {
+  return (x - 1) * SIDE_LENGTH + (y - 1);
+}
+
+void get_coords_from_index(int index, int *x, int *y) {
+  *x = (index / SIDE_LENGTH) + 1;
+  *y = (index % SIDE_LENGTH) + 1;
+}
+
 void clear_board(int *board) {
   for (int i = 0; i < NUM_ELEMENTS; i++) {
     board[i] = 0;
@@ -46,7 +55,7 @@ int check_winner(int *board) {
   }
 
   winner_found = 1;
-  for (int i = 0; i < NUM_ELEMENTS; i=i+SIDE_LENGTH) {
+  for (int i = 0; i < NUM_ELEMENTS;) {
     if ((i / SIDE_LENGTH) < ((NUM_ELEMENTS / SIDE_LENGTH) - 1)) {
       if (board[i] != board[i+SIDE_LENGTH] || board[i] == 0) {
         winner_found = 0;
@@ -62,8 +71,31 @@ int check_winner(int *board) {
     if (i < 15 && ((i + SIDE_LENGTH) / SIDE_LENGTH) == (NUM_ELEMENTS / SIDE_LENGTH)) {
       i = i - NUM_ELEMENTS + 1;
     }
+    i = i + SIDE_LENGTH;
+  }
+
+  winner_found = 1;
+  for (int i = 0; i < (NUM_ELEMENTS - 1); i = i + SIDE_LENGTH + 1) {
+    if (board[i] != board[i+SIDE_LENGTH+1] || board[i] == 0) {
+      winner_found = 0;
+    }
+  }
+  if (winner_found == 1) {
+    return board[0];
+  }
+
+  winner_found = 1;
+  for (int i = SIDE_LENGTH - 1; i < (NUM_ELEMENTS - SIDE_LENGTH); i = i + SIDE_LENGTH - 1) {
+    if (board[i] != board[i+SIDE_LENGTH-1] || board[i] == 0) {
+      winner_found = 0;
+    }
+  }
+  if (winner_found == 1) {
+    return board[SIDE_LENGTH-1];
   }
 
 
   return 0;
 }
+
+
