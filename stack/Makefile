@@ -3,6 +3,8 @@ P=main
 OBJECTS=stack
 # CFLAGS= -g -Wall -O3
 CFLAGS= -I/home/vagrant/dev/unix/stack/include -g -Wall -O3
+# use this for debugging:
+# CFLAGS= -I/home/vagrant/dev/unix/stack/include -g -Wall
 # this is for linking in shared object .so files which have the naming syntax
 # eg.  "libmylib" and then linked with "-lmylib":
 # LDLIBS= -L/home/vagrant/dev/unix/stack/lib -lstack

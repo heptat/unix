@@ -12,12 +12,8 @@
  * what you should do - so a singly linked list).
  */
 
-BOOL is_empty(void) {
-  return TRUE;
-}
-
 Stack * create_stack(int length) {
-  Stack *stack = malloc(sizeof(Stack));
+  Stack *stack = (Stack *) malloc(sizeof(Stack));
   stack->values = malloc(length * sizeof(int));
   stack->length = length;
   stack->head = -1;
@@ -25,6 +21,13 @@ Stack * create_stack(int length) {
   return stack;
 }
 
+BOOL is_empty(Stack *stack) {
+  if (stack->head < 0) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
 BOOL push(Stack *stack, int value) {
   if (stack->head == (stack->length - 1)) {
     return FALSE;
@@ -53,3 +56,4 @@ int peek(Stack *stack) {
   }
   return stack->values[stack->head];
 }
+
