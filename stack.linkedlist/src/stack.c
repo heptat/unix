@@ -50,23 +50,26 @@ void push(Stack *stack, int value) {
   stack->head = node;
 }
 
-void pop(Stack *stack, int *value) {
+void pop(Stack *stack, Node **node) {
+  *node = stack->head;
   if (1 == size(stack)) {
-    *value = stack->head->value;
     stack->next = NULL;
-    free(stack->head);
+    stack->head = NULL;
   } else if (stack->next != NULL) {
-    *value = stack->head->value;
-
     Node *ptr = stack->next;
     while (ptr->next->next != NULL) {
       ptr = ptr->next;
     }
     stack->head = ptr;
-    ptr = stack->head->next;
     stack->head->next = NULL;
-    free(ptr);
   }
+}
+
+int peek(Stack *stack) {
+  if (0 < size(stack)) {
+    return stack->head->value;
+  }
+  return 0;
 }
 
 void print_stack(Stack *stack) {
@@ -93,3 +96,32 @@ void destroy_stack(Stack *stack) {
 
   free(stack);
 }
+
+void sort(Stack *stack) {
+  // Obviously you only have to sort if the stack size is greater than 1
+  if (1 < size(stack)) {
+
+    Stack *tmp_stack = (Stack *) malloc(sizeof(Stack));
+
+    while (0 < size(stack)) {
+      Node *tmp_node = NULL;
+      pop(stack, &tmp_node);
+
+      // compare
+      if (tmp_node->value <= peek(stack)) {
+        push(tmp_stack, tmp_node->value);
+        free(tmp_node);
+      } else {
+        Node *tmp_node2 = NULL;
+        pop(stack, &tmp_node2);
+        push(tmp_stack, tmp_node2->value);
+        push(tmp_stack, tmp_node->value);
+        free(tmp_node2);
+        free(tmp_node);
+      }
+    }
+    stack = tmp_stack;
+    destroy_stack(stack);
+  }
+}
+

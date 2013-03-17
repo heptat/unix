@@ -12,9 +12,10 @@ int main() {
   printf("stack head value = %d\n", stack->head->value);
   print_stack(stack);
 
-  int value;
-  pop(stack, &value);
-  printf("popped value = %d\n", value);
+  // Node *node = (Node *) malloc(sizeof(Node));
+  Node *node = NULL;
+  pop(stack, &node);
+  printf("popped value = %d\n", node->value);
   printf("stack head value = %d\n", stack->head->value);
   print_stack(stack);
 
@@ -22,6 +23,7 @@ int main() {
   printf("stack head value = %d\n", stack->head->value);
   print_stack(stack);
 
+  free(node);
   destroy_stack(stack);
 
   return 0;
